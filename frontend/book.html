@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Book a Room</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #f5f7fa);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .success-message {
+      color: green;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 15px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-box">
+    <h2>Book a Room</h2>
+    <input type="text" id="name" placeholder="Full Name" />
+    <input type="email" id="email" placeholder="Email" />
+    <input type="date" id="checkin" placeholder="Check-in Date" />
+    <input type="date" id="checkout" placeholder="Check-out Date" />
+    <select id="roomType">
+      <option value="">-- Select Room Type --</option>
+      <option value="Single">Single</option>
+      <option value="Double">Double</option>
+      <option value="Suite">Suite</option>
+      <option value="Suite">Family</option>
+      <option value="Suite">Luxury</option>
+      <option value="Suite">Budget</option>
+    </select>
+    <button onclick="bookRoom()">Book Now</button>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    function bookRoom() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const checkin = document.getElementById('checkin').value;
+      const checkout = document.getElementById('checkout').value;
+      const roomtype = document.getElementById('roomType').value;
+      const messageBox = document.getElementById('message');
+
+      if (!name || !email || !checkin || !checkout || !roomtype) {
+        messageBox.innerHTML = "<p class='error-message'>⚠️ Please fill in all fields!</p>";
+        return;
+      }
+
+      fetch('http://localhost:3000/api/book', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          checkin,
+          checkout,
+          roomtype
+        })
+      })
+      .then(res => res.json())
+      .then(response => {
+        if (response.success) {
+          messageBox.innerHTML = "<p class='success-message'>🎉 Booking successful! Redirecting to payment...</p>";
+          localStorage.setItem("reservationId", response.reservationId);
+          setTimeout(() => {
+            window.location.href = `payment.html?reservation_id=${response.reservationId}`;
+          }, 2000);
+        } else {
+          messageBox.innerHTML = `<p class='error-message'>❌ ${response.message || 'Booking failed!'}</p>`;
+        }
+      })
+      .catch(error => {
+        console.error("Booking error:", error);
+        messageBox.innerHTML = "<p class='error-message'>⚠️ Server error. Please try again later.</p>";
+      });
+    }
+  </script>
+
+</body>
+</html>

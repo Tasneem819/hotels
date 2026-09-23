@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Room - My Hotels</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #e0f7fa, #fce4ec);
+    }
+    .container {
+      max-width: 900px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .room-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+    .room-header h1 {
+      font-size: 2rem;
+      margin: 0;
+    }
+    .room-image {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .info {
+      margin-top: 1rem;
+    }
+    .info p {
+      line-height: 1.6;
+    }
+    .price {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #003580;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      text-decoration: none;
+      color: #003580;
+      font-weight: bold;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+    .nav {
+      background: #003580;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 600;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div><strong>My Hotels</strong></div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="#">Book</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="room-header">
+      <h1>Budget Room</h1>
+      <div class="price">₹1800/night</div>
+    </div>
+    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Budget Room" class="room-image">
+
+
+    <div class="info">
+      <p>Our Budget Room offers affordable comfort for solo travelers or couples. It features a clean and cozy setup with a double bed, free Wi-Fi, air conditioning, and basic essentials to ensure a pleasant stay without breaking the bank.</p>
+      <p class="rating">Rating: ★★★☆☆</p>
+      <p>Availability: 5 rooms left</p>
+    </div>
+    <a href="index.html" class="back-link">← Back to Home</a>
+  </div>
+</body>
+</html>

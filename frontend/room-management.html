@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Room Management</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f9fafc;
+      margin: 0;
+    }
+
+    .nav {
+      background-color: #003580;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #003580;
+      margin-bottom: 1.5rem;
+    }
+
+    form {
+      background: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-right: 0.5rem;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 2rem;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #003580;
+      color: white;
+    }
+
+    .actions button {
+      background-color: #28a745;
+      color: white;
+      margin-right: 0.3rem;
+    }
+
+    .actions .edit-btn {
+      background-color: #ffc107;
+      color: #000;
+    }
+
+    .actions .delete-btn {
+      background-color: #dc3545;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <h1>Admin Panel</h1>
+    <a href="index.html" style="color:white; text-decoration:none;">Back to Site</a>
+  </div>
+
+  <div class="container">
+    <h2>Room Management</h2>
+
+    <form id="roomForm">
+      <label>Room Name</label>
+      <input type="text" name="roomName" placeholder="e.g. Deluxe King Room" required>
+
+      <label>Room Type</label>
+      <select name="roomType" required>
+        <option value="">--Select Type--</option>
+        <option value="Budget Room">Budget Room</option>
+        <option value="Single Room">Single Room</option>
+        <option value="Double Room">Double Room</option>
+        <option value="Family Suite">Family Suite</option>
+        <option value="Luxury Suite">Luxury Suite</option>
+      </select>
+
+      <label>Price per Night (₹)</label>
+      <input type="number" name="price" placeholder="e.g. 2500" required>
+
+      <button type="submit">Add Room</button>
+      <button type="reset">Clear</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Room Name</th>
+          <th>Type</th>
+          <th>Price (₹)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="roomTableBody">
+        <tr>
+          <td>Deluxe King Room</td>
+          <td>Luxury Suite</td>
+          <td>8500</td>
+          <td class="actions">
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+          </td>
+        </tr>
+        <!-- Additional rows can be added dynamically -->
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

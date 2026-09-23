@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login - Hotel Reservation</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #ffff, #ffffff);
+      margin: 0;
+      padding: 0;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 3rem auto;
+      background: #f9f9f9;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #003580;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      background: #003580;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #00264d;
+    }
+    .extra-links {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .extra-links a {
+      color: #003580;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Login</h2>
+    <label for="loginEmail">Email</label>
+    <input type="email" id="loginEmail" placeholder="user@example.com">
+
+    <label for="loginPassword">Password</label>
+    <input type="password" id="loginPassword" placeholder="Enter password">
+
+    <button onclick="loginUser()">Login</button>
+
+    <div class="extra-links">
+      Don't have an account?
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </div>
+
+ <script>
+  function loginUser() {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    if (!email || !password) {
+      alert("Please fill in both fields.");
+      return;
+    }
+
+    fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    })
+    .then(res => res.json())
+    .then(response => {
+      console.log("Login API response:", response); // 👈 Add logging
+
+      if (response.success) {
+        if (response.email && response.name) {
+          localStorage.setItem("userEmail", response.email);
+          localStorage.setItem("userName", response.name);
+          alert("Login successful!");
+          window.location.href = "user-dashboard.html";
+        } else {
+          alert("Login succeeded but no user data received.");
+          console.error("Missing user data:", response);
+        }
+      } else {
+        alert("Invalid credentials!");
+      }
+    })
+    .catch(error => {
+      alert("Error connecting to server");
+      console.error(error);
+    });
+  }
+</script>
+
+
+</body>
+</html>

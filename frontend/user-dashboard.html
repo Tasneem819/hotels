@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007BFF;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f1f1;
+    }
+
+    .user-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .logout-btn {
+      background-color: #dc3545;
+      color: white;
+      padding: 0.5rem 1rem;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .logout-btn:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My Dashboard</h1>
+  </header>
+<div style="text-align: center; margin: 20px 0;">
+  <a href="book.html">
+    <button style="
+      background-color: #28a745;
+      color: white;
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    ">
+      📅 Book Now
+    </button>
+    </a>
+</div>
+
+  <div class="container">
+    <div class="user-info">
+      <div>
+        <strong>Name:</strong> <span id="userName">User</span><br>
+        <strong>Email:</strong> <span id="userEmail">user@example.com</span>
+      </div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <h2>Your Booking History</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Room Type</th>
+          <th>Check-in</th>
+          <th>Check-out</th>
+          <th>Payment</th>
+        </tr>
+      </thead>
+      <tbody id="bookingTable">
+        <tr><td colspan="4">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+ <script>
+   document.addEventListener('DOMContentLoaded', () => {
+    const email = localStorage.getItem('userEmail');
+    const name = localStorage.getItem('userName');
+
+    if (!email || !name) {
+      alert("You are not logged in.");
+      window.location.href = "login.html";
+      return;
+    }
+
+    document.getElementById('userEmail').textContent = email;
+    document.getElementById('userName').textContent = name;
+
+    fetch(`http://localhost:3000/api/user-reservations?email=${encodeURIComponent(email)}`)
+      .then(res => res.json())
+      .then(data => {
+        const table = document.getElementById('bookingTable');
+        table.innerHTML = ''; // Clear old content
+
+        const reservations = data.reservations;
+
+        if (Array.isArray(reservations) && reservations.length > 0) {
+          reservations.forEach(booking => {
+            table.innerHTML += `
+              <tr>
+                <td>${booking.roomtype}</td>
+                <td>${booking.checkin}</td>
+                <td>${booking.checkout}</td>
+                <td>${booking.payment}</td>
+              </tr>
+            `;
+          });
+        } else {
+          table.innerHTML = '<tr><td colspan="4">No bookings found.</td></tr>';
+        }
+      })
+      .catch(err => {
+        console.error("Fetch error:", err);
+        document.getElementById('bookingTable').innerHTML =
+          '<tr><td colspan="4">⚠️ Error loading booking history.</td></tr>';
+      });
+  });
+
+  function logout() {
+    localStorage.clear();
+    window.location.href = 'index.html';
+  }
+</script>
+
+
+</body>
+</html>

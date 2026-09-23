@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Explore Our Rooms</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    header {
+      background-color: #003580;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    .gallery div {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .gallery img {
+      width: 220px;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .gallery div:hover {
+      transform: scale(1.05);
+    }
+
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #modalContent {
+      position: relative;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 90%;
+      max-height: 90%;
+      text-align: center;
+    }
+
+    #modal img {
+      max-width: 100%;
+      max-height: 60vh;
+      border-radius: 8px;
+    }
+
+    #modal p {
+      margin-top: 15px;
+      font-size: 18px;
+    }
+
+    #modalClose {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 30px;
+      color: #003580;
+      cursor: pointer;
+    }
+
+    .back-button {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .back-button a {
+      background-color: #003580;
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .back-button a:hover {
+      background-color: #003580;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Explore Our Rooms</h1>
+</header>
+
+<section class="gallery">
+  <div onclick="openModal('images/download.jpg', 'Deluxe Room: King bed, Wi-Fi, complimentary breakfast')">
+    <img src="images/download.jpg" alt="Deluxe Room" />
+  </div>
+  <div onclick="openModal('images/download (1).jpg', 'Executive Room: City view, workspace, room service')">
+    <img src="images/download (1).jpg" alt="Executive Room" />
+  </div>
+  <div onclick="openModal('images/download (2).jpg', 'Standard Room: Budget-friendly with modern amenities')">
+    <img src="images/download (2).jpg" alt="Standard Room" />
+  </div>
+  <div onclick="openModal('images/download (3).jpg', 'Luxury Suite: Jacuzzi, private lounge, premium service')">
+    <img src="images/download (3).jpg" alt="Luxury Suite" />
+  </div>
+  <div onclick="openModal('images/download (4).jpg', 'Family Room: Spacious for families with kids zone')">
+    <img src="images/download (4).jpg" alt="Family Room" />
+  </div>
+  <div onclick="openModal('images/download (5).jpg', 'Single Room: Solo stay with essential amenities')">
+    <img src="images/download (5).jpg" alt="Single Room" />
+  </div>
+  <div onclick="openModal('images/download (6).jpg', 'Pool View Room: Scenic view and access to pool')">
+    <img src="images/download (6).jpg" alt="Pool View Room" />
+  </div>
+  <div onclick="openModal('images/download (7).jpg', 'Garden View Room: Peaceful atmosphere and balcony')">
+    <img src="images/download (7).jpg" alt="Garden View Room" />
+  </div>
+  <div onclick="openModal('images/download (8).jpg', 'Studio Room: Modern design with kitchen space')">
+    <img src="images/download (8).jpg" alt="Studio Room" />
+  </div>
+  <div onclick="openModal('images/download (9).jpg', 'Presidential Suite: Top-tier luxury for VIP stays')">
+    <img src="images/download (9).jpg" alt="Presidential Suite" />
+  </div>
+</section>
+
+<div class="back-button">
+  <a href="index.html">Back to Home</a>
+</div>
+
+<!-- Modal -->
+<div id="modal">
+  <div id="modalContent">
+    <span id="modalClose" onclick="closeModal()">&times;</span>
+    <img id="modalImage" src="" alt="Room Image" />
+    <p id="modalDesc"></p>
+  </div>
+</div>
+
+<script>
+  function openModal(imageSrc, description) {
+    document.getElementById("modalImage").src = imageSrc;
+    document.getElementById("modalDesc").textContent = description;
+    document.getElementById("modal").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = "none";
+  }
+  </script>
+
+</body>
+</html>

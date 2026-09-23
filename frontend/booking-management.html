@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Booking Management</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav {
+      background-color: #003580;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #003580;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background-color: white;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #003580;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .actions button {
+      margin-right: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .view-btn { background-color: #28a745; color: white; }
+    .edit-btn { background-color: #ffc107; color: black; }
+    .delete-btn { background-color: #dc3545; color: white; }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <h1>Admin Panel</h1>
+    <a href="index.html" style="color:white; text-decoration:none;">Back to Site</a>
+  </div>
+
+  <div class="container">
+    <h2>Booking Management</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Room Type</th>
+          <th>Check-In</th>
+          <th>Check-Out</th>
+          <th>Payment</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="bookingTableBody">
+        <tr>
+          <td>Amit Sharma</td>
+          <td>amit@example.com</td>
+          <td>Luxury Suite</td>
+          <td>2025-07-05</td>
+          <td>2025-07-08</td>
+          <td>Credit Card</td>
+          <td class="actions">
+            <button class="view-btn">View</button>
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+          </td>
+        </tr>
+        <!-- More rows can be added dynamically -->
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

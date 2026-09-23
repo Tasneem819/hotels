@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Agent Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      padding: 2rem;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border 0.3s;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .back-home {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+
+    .back-home a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .back-home a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="login-box">
+    <h2>Agent Login</h2>
+    <input type="email" id="agentEmail" placeholder="Email" required>
+    <input type="password" id="agentPassword" placeholder="Password" required>
+    <button onclick="loginAgent()">Login</button>
+    <div class="back-home">
+      <a href="index.html">← Back to Home</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function loginAgent() {
+    const email = document.getElementById("agentEmail").value;
+    const password = document.getElementById("agentPassword").value;
+
+    if (!email || !password) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    fetch('http://localhost:3000/api/agent-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+    .then(res => res.json())
+    .then(response => {
+      if (response.success) {
+        alert("Agent login successful!");
+        window.location.href = "agent-dashboard.html";
+      } else {
+        alert("Invalid agent credentials.");
+      }
+    })
+    .catch(error => {
+      alert("Server error");
+      console.error(error);
+    });
+  }
+</script>
+
+</body>
+</html>

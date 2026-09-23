@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up - Hotel Reservation</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+      margin: 0;
+      padding: 0;
+    }
+
+    .signup-container {
+      max-width: 400px;
+      margin: 3rem auto;
+      background: #fdfdfd;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #003580;
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1.2rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      background: #003580;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #002b60;
+    }
+
+    .extra-links {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .extra-links a {
+      color: #003580;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="signup-container">
+    <h2>Sign Up</h2>
+    <label for="signupName">Full Name</label>
+    <input type="text" id="signupName" placeholder="Your full name">
+
+    <label for="signupEmail">Email</label>
+    <input type="email" id="signupEmail" placeholder="user@example.com">
+
+    <label for="signupPassword">Password</label>
+    <input type="password" id="signupPassword" placeholder="Create a password">
+
+    <button onclick="registerUser()">Sign Up</button>
+
+    <div class="extra-links">
+      Already have an account?
+      <a href="login.html">Login</a>
+    </div>
+  </div>
+
+  <script>
+  function registerUser() {
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value;
+
+    // Basic client-side validation
+    if (!name || !email || !password) {
+      alert("⚠️ Please fill in all fields.");
+      return;
+    }
+
+    // Send signup request to backend
+    fetch('http://localhost:3000/api/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, password })
+    })
+    .then(res => res.json())
+    .then(response => {
+      if (response.success) {
+        // Save user data in localStorage for session
+        localStorage.setItem("userEmail", email);
+        localStorage.setItem("userName", name);
+
+        alert("✅ Registration successful! Redirecting to your dashboard...");
+
+        // Redirect to user dashboard immediately
+        window.location.href = "user-dashboard.html";
+      } else {
+        alert("❌ " + (response.message || "Signup failed. Try again."));
+      }
+    })
+    .catch(error => {
+      alert("🚫 Error connecting to server. Please try again.");
+      console.error(error);
+    });
+  }
+</script>
+
+
+</body>
+</html>

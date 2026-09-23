@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - My Hotels</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #f8f9fa, #e3f2fd);
+    }
+    .nav {
+      background-color: #003580;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+    .nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: bold;
+    }
+    .nav a:hover {
+      text-decoration: underline;
+    }
+    .container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #003580;
+      margin-bottom: 2rem;
+    }
+    .admin-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+    .action-box {
+      background-color: #f0f4f8;
+      border: 1px solid #ccc;
+      padding: 1rem;
+      text-align: center;
+      border-radius: 8px;
+      transition: transform 0.2s ease-in-out;
+    }
+    .action-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .action-box button {
+      padding: 0.5rem 1rem;
+      background-color: #003580;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+    .action-box button:hover {
+      background-color: #00264d;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <div><strong>My Hotels</strong></div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="admin.html">Admin Panel</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Admin Panel</h1>
+    <div class="admin-actions">
+      <div class="action-box">
+        <h3>Manage Bookings</h3>
+        <button onclick="location.href='booking-management.html'">Go</button>
+      </div>
+      <div class="action-box">
+        <h3>Room Management</h3>
+        <button onclick="location.href='room-management.html'">Go</button>
+      </div>
+      <div class="action-box">
+        <h3>User Accounts</h3>
+        <button onclick="location.href='user-management.html'">Go</button>
+      </div>
+      <div class="action-box">
+        <h3>View Reports</h3>
+        <button onclick="location.href='report-management.html'">Go</button>
+      </div>
+      <div class="action-box">
+        <h3>Payment Logs</h3>
+        <button onclick="location.href='payment-logs.html'">Go</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

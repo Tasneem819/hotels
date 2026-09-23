@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Report Management</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f8;
+      margin: 0;
+    }
+
+    .nav {
+      background-color: #003580;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #003580;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      background: white;
+      padding: 1.2rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-right: 0.5rem;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .status {
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: bold;
+      color: green;
+    }
+
+    .report-display {
+      margin-top: 2rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .report-display h3 {
+      margin-top: 0;
+      color: #003580;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <h1>Admin Panel</h1>
+    <a href="index.html" style="color:white; text-decoration:none;">Back to Site</a>
+  </div>
+
+  <div class="container">
+    <h2>Report Management</h2>
+
+    <form id="reportForm">
+      <label for="reportId">Report ID</label>
+      <input type="text" id="reportId" name="reportId" required>
+
+      <label for="reportContent">Report Content</label>
+      <textarea id="reportContent" name="reportContent" rows="5"></textarea>
+
+      <button type="button" onclick="saveReport()">Save</button>
+      <button type="button" onclick="viewReport()">View</button>
+      <button type="button" onclick="deleteReport()">Delete</button>
+    </form>
+
+    <div class="status" id="reportStatus"></div>
+
+    <div class="report-display" id="reportDisplay" style="display:none;">
+      <h3>Report Preview</h3>
+      <div id="reportText"></div>
+    </div>
+  </div>
+
+  <script>
+    function saveReport() {
+      const id = document.getElementById('reportId').value;
+      const content = document.getElementById('reportContent').value;
+      localStorage.setItem(`report_${id}`, content);
+      document.getElementById('reportStatus').textContent = 'Report Saved!';
+    }
+
+    function viewReport() {
+      const id = document.getElementById('reportId').value;
+      const content = localStorage.getItem(`report_${id}`);
+      if (content) {
+        document.getElementById('reportContent').value = content;
+        document.getElementById('reportText').innerText = content;
+        document.getElementById('reportDisplay').style.display = 'block';
+        document.getElementById('reportStatus').textContent = 'Report Loaded!';
+      } else {
+        document.getElementById('reportStatus').textContent = 'No Report Found!';
+        document.getElementById('reportDisplay').style.display = 'none';
+      }
+    }
+
+    function deleteReport() {
+      const id = document.getElementById('reportId').value;
+      localStorage.removeItem(`report_${id}`);
+      document.getElementById('reportContent').value = '';
+      document.getElementById('reportText').innerText = '';
+      document.getElementById('reportDisplay').style.display = 'none';
+      document.getElementById('reportStatus').textContent = 'Report Deleted!';
+    }
+  </script>
+</body>
+</html>

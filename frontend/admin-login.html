@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e3f2fd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    .login-box h2 {
+      text-align: center;
+      color: #003580;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .login-box button {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 0.6rem;
+      background: #003580;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #loginStatus {
+      text-align: center;
+      margin-top: 1rem;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-box">
+  <h2>Admin Login</h2>
+  <form id="adminLoginForm">
+    <input type="email" id="adminEmail" placeholder="Email" required>
+    <input type="password" id="adminPassword" placeholder="Password" required>
+    <button type="button" onclick="adminLogin()">Login</button>
+  </form>
+  <div id="loginStatus"></div>
+</div>
+<script>
+  function adminLogin() {
+    const email = document.getElementById('adminEmail').value;
+    const password = document.getElementById('adminPassword').value;
+
+    fetch('http://localhost:3000/api/admin-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById('loginStatus').style.color = 'green';
+        document.getElementById('loginStatus').textContent = "Login successful!";
+        window.location.href = "admin.html";  // 👈 Redirect to admin.html
+      } else {
+        document.getElementById('loginStatus').style.color = 'red';
+        document.getElementById('loginStatus').textContent = "Invalid credentials.";
+      }
+    })
+    .catch(err => {
+      document.getElementById('loginStatus').textContent = "Error connecting to server.";
+      console.error(err);
+    });
+  }
+</script>
+</body>
+</html>

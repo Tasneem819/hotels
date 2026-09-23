@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Make Payment</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-box {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    .form-box h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .success-message {
+      color: green;
+      margin-top: 15px;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-box">
+    <h2>Complete Payment</h2>
+    <input type="number" id="reservationId" placeholder="Reservation ID" required />
+    <input type="number" id="amount" placeholder="Amount (₹)" required />
+    <select id="paymentType">
+      <option value="">-- Select Payment Method --</option>
+      <option value="Credit Card">Credit Card</option>
+      <option value="Debit Card">Debit Card</option>
+      <option value="UPI">UPI</option>
+      <option value="Net Banking">Net Banking</option>
+    </select>
+    <button onclick="makePayment()">Pay Now</button>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    // ✅ Auto-fill reservation ID from URL (e.g., payment.html?reservation_id=123)
+    const urlParams = new URLSearchParams(window.location.search);
+    const reservationIdFromURL = urlParams.get('reservation_id');
+    if (reservationIdFromURL) {
+      document.getElementById('reservationId').value = reservationIdFromURL;
+    }
+
+    function makePayment() {
+      const reservation_id = parseInt(document.getElementById('reservationId').value);
+      const amount = parseFloat(document.getElementById('amount').value);
+      const payment_type = document.getElementById('paymentType').value;
+      const messageBox = document.getElementById('message');
+
+      if (!reservation_id || !amount || !payment_type) {
+        messageBox.innerHTML = `<p class='error-message'>⚠️ Please fill all fields correctly!</p>`;
+        return;
+      }
+
+      fetch('http://localhost:3000/api/pay', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reservation_id, amount, payment_type })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          messageBox.innerHTML = "<p class='success-message'>🎉 Payment successful! Redirecting to dashboard...</p>";
+          setTimeout(() => {
+            window.location.href = 'user-dashboard.html';
+          }, 2000);
+        } else {
+          messageBox.innerHTML = `<p class="error-message">❌ ${data.message}</p>`;
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        messageBox.innerHTML = "<p class='error-message'>⚠️ Server error. Please try again.</p>";
+      });
+    }
+  </script>
+
+</body>
+</html>

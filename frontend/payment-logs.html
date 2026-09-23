@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Payment Logs</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+    }
+
+    .nav {
+      background-color: #003580;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav h1 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      text-align: center;
+      color: #003580;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 0.95rem;
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      margin-right: 0.5rem;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .status {
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: bold;
+      color: green;
+    }
+
+    .logs {
+      margin-top: 2rem;
+      background: #fff;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .logs h3 {
+      margin-top: 0;
+      color: #003580;
+    }
+
+    .log-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <h1>Admin Panel</h1>
+    <a href="index.html" style="color:white; text-decoration:none;">Back to Site</a>
+  </div>
+
+  <div class="container">
+    <h2>Payment Logs</h2>
+
+    <form id="paymentForm">
+      <label for="paymentId">Payment ID</label>
+      <input type="text" id="paymentId" required>
+
+      <label for="payerName">Payer Name</label>
+      <input type="text" id="payerName" required>
+
+      <label for="amount">Amount Paid (₹)</label>
+      <input type="number" id="amount" required>
+
+      <label for="paymentType">Payment Method</label>
+      <select id="paymentType" required>
+        <option value="">--Select--</option>
+        <option value="Credit Card">Credit Card</option>
+        <option value="Debit Card">Debit Card</option>
+        <option value="UPI">UPI</option>
+        <option value="Cash">Cash</option>
+      </select>
+
+      <button type="button" onclick="savePayment()">Save</button>
+      <button type="button" onclick="viewPayment()">View</button>
+      <button type="button" onclick="deletePayment()">Delete</button>
+    </form>
+
+    <div class="status" id="paymentStatus"></div>
+
+    <div class="logs" id="paymentLog" style="display:none;">
+      <h3>Payment Details</h3>
+      <div id="paymentData" class="log-item"></div>
+    </div>
+  </div>
+
+  <script>
+    function savePayment() {
+      const id = document.getElementById('paymentId').value;
+      const data = {
+        name: document.getElementById('payerName').value,
+        amount: document.getElementById('amount').value,
+        type: document.getElementById('paymentType').value
+      };
+      localStorage.setItem(`payment_${id}`, JSON.stringify(data));
+      document.getElementById('paymentStatus').textContent = 'Payment Log Saved!';
+    }
+
+    function viewPayment() {
+      const id = document.getElementById('paymentId').value;
+      const data = JSON.parse(localStorage.getItem(`payment_${id}`));
+      if (data) {
+        document.getElementById('paymentData').innerHTML = `
+          <strong>Payer:</strong> ${data.name}<br>
+          <strong>Amount:</strong> ₹${data.amount}<br>
+          <strong>Method:</strong> ${data.type}
+        `;
+        document.getElementById('paymentLog').style.display = 'block';
+        document.getElementById('paymentStatus').textContent = 'Payment Log Loaded!';
+      } else {
+        document.getElementById('paymentStatus').textContent = 'No Payment Found!';
+        document.getElementById('paymentLog').style.display = 'none';
+      }
+    }
+
+    function deletePayment() {
+      const id = document.getElementById('paymentId').value;
+      localStorage.removeItem(`payment_${id}`);
+      document.getElementById('paymentData').innerHTML = '';
+      document.getElementById('paymentLog').style.display = 'none';
+      document.getElementById('paymentStatus').textContent = 'Payment Log Deleted!';
+    }
+  </script>
+</body>
+</html>
